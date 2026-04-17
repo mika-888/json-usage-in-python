@@ -1,9 +1,9 @@
-# json-usage-in-python
+
 # JSON Handling in Python
 
 This repository contains my practical implementation and understanding of JSON handling in Python.
 
-## 📌 Topics Covered
+## Topics Covered
 
 * Parsing JSON (`json.loads`)
 * Converting Python to JSON (`json.dumps`)
@@ -12,14 +12,14 @@ This repository contains my practical implementation and understanding of JSON h
 * Extracting nested data from JSON
 * Handling missing keys safely
 
-## 🌐 API Practice
+##  API Practice
 
 Used JSONPlaceholder API to:
 
 * Fetch posts and extract title + id
 * Fetch users and extract name + email
 
-## 📂 Mini Project
+##  Mini Project
 
 Implemented a simple chat storage system:
 
@@ -33,7 +33,7 @@ Implemented a simple chat storage system:
 * requests
 * JSON module
 
-## 🚀 Why This Project
+##  Why This Project
 
 This project builds the foundation for:
 
@@ -42,4 +42,4 @@ This project builds the foundation for:
 * RAG pipelines
 * Backend data handling
 
-
+## I referred to : https://www.youtube.com/watch?v=9N6a-VLBa2I&t=2s
