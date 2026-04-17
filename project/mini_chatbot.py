@@ -14,20 +14,6 @@ import json
         print("No chat history found.")
 '''
             
-FILE_NAME = "chat.json"
-
-# Load previous chat
-def load_chat():
-    try:
-        with open(FILE_NAME, "r") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return []
-
-# Save chat
-def save_chat(messages):
-    with open(FILE_NAME, "w") as f:
-        json.dump(messages, f, indent=4)
 
 # Simple bot response logic (can replace later with AI)
 def get_bot_response(user_input):
