@@ -3,6 +3,33 @@
 
 This repository contains my practical implementation and understanding of JSON handling in Python.
 
+# HOW THIS FOLDER IS STRUCTURED :
+
+json-python-practice/
+│
+├── basics/
+│   ├── parse_json.py
+│   ├── convert_json.py
+│
+├── file_handling/
+│   ├── write_json.py
+│   ├── read_json.py
+│
+├── api/
+│   ├── fetch_posts.py
+│   ├── fetch_users.py
+│
+├── mini_project/
+│   ├── chat_storage.py
+│
+├── data/
+│   ├── sample.json
+│   ├── chat.json   # (generated file)
+│
+├── requirements.txt
+├── README.md
+└── .gitignore
+
 ## Topics Covered
 
 * Parsing JSON (`json.loads`)
