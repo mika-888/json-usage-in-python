@@ -28,7 +28,7 @@ Implemented a simple chat storage system:
 * Load previous chat data
 * Simulates memory used in AI chatbots
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 * Python
 * requests
