@@ -1,75 +1,87 @@
-import json 
-'''
-#def save_chat(chat):
-    with open("chat.json","w")as f:
-        json.dump(chat,f)
+import json
 
-#def read_chat():
+def prev_message():
     try:
-        with open("chat.json","r")as f:
-            data=json.load(f)
+        with open("savechat.json", "r") as f:
+            data = json.load(f)
+
             for i in data:
-                print(f"{i["role"]}: {i["content"]}")
+                try:
+                    print(f'{i["role"]}: {i["content"]}')
+                except KeyError:
+                    print("Invalid message format skipped")
+
+            return data   # ✅ ALWAYS return if successful
+
     except FileNotFoundError:
-        print("No chat history found.")
-'''
-            
+        print("No previous chat found.")
+        return []
 
-# Simple bot response logic (can replace later with AI)
-def get_bot_response(user_input):
-    user_input = user_input.lower()
-    
-    if "hi" in user_input or "hello" in user_input:
-        return "Hello!"
-    elif "how are you" in user_input:
-        return "I'm just code, but I'm doing great!"
-    elif "bye" in user_input:
-        return "Goodbye!"
+    except json.JSONDecodeError:
+        print("Corrupted or empty file. Resetting...")
+        return []
+
+    except PermissionError:
+        print("Permission denied.")
+        return []
+
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return []
+
+
+def save_convo(message: list):
+    with open("savechat.json", "w") as f:
+        json.dump(message, f, indent=4)
+
+
+def bot_response(s: str):
+    s = s.lower()
+
+    if "hi" in s:
+        bot = "Hello"
+    elif "how are you" in s:
+        bot = "I am good"
+    elif "bye" in s:
+        bot = "Goodbye"
     else:
-        return "I don't understand that yet."
+        bot = "I don't understand"
 
-# MAIN PROGRAM
+    print(f"Bot: {bot}")
+    return bot
 
-messages = load_chat()
 
-print("Chatbot started (type 'stop' to exit)\n")
-
-# Show previous chat
-if messages:
+if __name__ == "__main__":
     print("Previous conversation:")
-    for msg in messages:
-        print(f"{msg['role']}: {msg['content']}")
-    print("\n--- Continue chatting ---\n")
+    message = prev_message()
 
-while True:
-    user_input = input("You: ")
+    print("Continue chatting")
 
-    # Exit condition
-    if user_input.strip() == "" or user_input.lower() == "stop":
-        print("Chat ended.")
-        break
+    while True:
+        try:
+            i = input("User: ")
 
-    # Add user message
-    messages.append({
-        "role": "user",
-        "content": user_input
-    })
+            if i.lower() == "stop":
+                break
 
-    # Generate bot response
-    bot_reply = get_bot_response(user_input)
+            if i.lower() == "clear":
+                message = []
+                save_convo(message)
+                print("Chat cleared")
+                continue
 
-    # Add bot message
-    messages.append({
-        "role": "assistant",
-        "content": bot_reply
-    })
+        except KeyboardInterrupt:
+            print("\nExiting safely...")
+            break
 
-    # Print response
-    print(f"Bot: {bot_reply}")
+        except EOFError:
+            print("\nInput stream closed.")
+            break
 
-    # Save conversation
-    save_chat(messages)
-except FileNotFoundError:
-        print("No chat history found.")
+        message.append({"role": "user", "content": i})
 
-   
+        bot = bot_response(i)
+
+        message.append({"role": "assistant", "content": bot})
+
+        save_convo(message)
