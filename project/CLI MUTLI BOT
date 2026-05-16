@@ -1,0 +1,127 @@
+
+import requests
+
+while True:
+
+    print("\n===== MENU =====")
+    print("1. Weather")
+    print("2. GitHub Finder")
+    print("3. Random Quote")
+    print("4. Random Joke")
+    print("Type 'exit' to quit")
+
+    choice = input("\nEnter choice: ")
+
+    if choice.lower() == "exit":
+        print("Program Ended")
+        break
+
+    # WEATHER API
+    elif choice == "1":
+
+        try:
+            city = input("Enter City Name: ")
+
+            api_key = "YOUR_API_KEY"
+
+            url = "https://api.openweathermap.org/data/2.5/weather"
+
+            payload = {
+                "q": city,
+                "appid": api_key
+            }
+
+            r = requests.get(url, params=payload)
+
+            if r.status_code == 200:
+
+                data = r.json()
+
+                print("\nCity:", data["name"])
+                print("Temperature (Kelvin):", data["main"]["temp"])
+                print("Weather:", data["weather"][0]["description"])
+                print("Humidity:", data["main"]["humidity"])
+
+            else:
+                print("Invalid Request or API Key")
+
+        except Exception as e:
+            print("Error:", e)
+
+    # GITHUB FINDER
+    elif choice == "2":
+
+        try:
+            username = input("Enter GitHub Username: ")
+
+            url = f"https://api.github.com/users/{username}"
+
+            r = requests.get(url)
+
+            if r.status_code == 200:
+
+                data = r.json()
+
+                print("\nUsername:", data["login"])
+                print("Followers:", data["followers"])
+                print("Following:", data["following"])
+                print("Public Repositories:", data["public_repos"])
+                print("Profile URL:", data["html_url"])
+
+            else:
+                print("User Not Found")
+
+        except Exception as e:
+            print("Error:", e)
+
+    # RANDOM QUOTE
+    elif choice == "3":
+
+        try:
+
+            url = "https://zenquotes.io/api/random"
+
+
+            r = requests.get(url)
+
+            if r.status_code == 200:
+
+                data = r.json()
+                print("\nQUOTE")
+                print(data[0]["q"])
+                print("Author:", data[0]["a"])
+
+
+            else:
+                print("Could Not Fetch Quote")
+
+        except Exception as e:
+            print("Error:", e)
+
+    # RANDOM JOKE
+    elif choice == "4":
+
+        try:
+
+            url = "https://official-joke-api.appspot.com/random_joke"
+
+            r = requests.get(url)
+
+            if r.status_code == 200:
+
+                data = r.json()
+
+                print("\nSetup:")
+                print(data["setup"])
+
+                print("\nPunchline:")
+                print(data["punchline"])
+
+            else:
+                print("Could Not Fetch Joke")
+
+        except Exception as e:
+            print("Error:", e)
+
+    else:
+        print("Invalid Choice")
