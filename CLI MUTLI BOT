@@ -1,0 +1,190 @@
+import requests
+
+def line():
+    print("-" * 40)
+
+
+
+# Weather Tool
+
+
+def weather_tool():
+
+    try:
+        city = input("Enter City Name: ")
+
+        url = "https://api.openweathermap.org/data/2.5/weather"
+
+        payload = {
+            "q": city,
+            "appid": "YOUR_API_KEY",
+            "units": "metric"
+        }
+
+        r = requests.get(url, params=payload, timeout=5)
+
+        if r.status_code == 200:
+
+            data = r.json()
+
+            line()
+            print("WEATHER REPORT")
+            line()
+
+            print("City:", data["name"])
+            print("Temperature:", data["main"]["temp"], "°C")
+            print("Humidity:", data["main"]["humidity"], "%")
+            print("Condition:", data["weather"][0]["description"])
+
+            line()
+
+        else:
+            print("Invalid City or API Error")
+
+    except requests.exceptions.RequestException:
+        print("Network/API Error")
+
+    except Exception as e:
+        print("Error:", e)
+
+
+# GitHub Tool
+
+
+def github_tool():
+
+    try:
+        username = input("Enter GitHub Username: ")
+
+        url = f"https://api.github.com/users/{username}"
+
+        r = requests.get(url, timeout=5)
+
+        if r.status_code == 200:
+
+            data = r.json()
+
+            line()
+            print("GITHUB PROFILE")
+            line()
+
+            print("Username:", data["login"])
+            print("Followers:", data["followers"])
+            print("Following:", data["following"])
+            print("Repositories:", data["public_repos"])
+
+            line()
+
+        else:
+            print("User Not Found")
+
+    except requests.exceptions.RequestException:
+        print("Network/API Error")
+
+    except Exception as e:
+        print("Error:", e)
+
+
+# Quote Tool
+
+
+def quote_tool():
+
+    try:
+
+        url = "https://api.quotable.io/random"
+
+        r = requests.get(url, timeout=5)
+
+        if r.status_code == 200:
+
+            data = r.json()
+
+            line()
+            print("QUOTE")
+            line()
+
+            print(data["content"])
+            print("\nAuthor:", data["author"])
+
+            line()
+
+        else:
+            print("Could Not Fetch Quote")
+
+    except requests.exceptions.RequestException:
+        print("Network/API Error")
+
+    except Exception as e:
+        print("Error:", e)
+
+
+# Joke Tool
+
+
+def joke_tool():
+
+    try:
+
+        url = "https://official-joke-api.appspot.com/random_joke"
+
+        r = requests.get(url, timeout=5)
+
+        if r.status_code == 200:
+
+            data = r.json()
+
+            line()
+            print("RANDOM JOKE")
+            line()
+
+            print("Setup:", data["setup"])
+            print("Punchline:", data["punchline"])
+
+            line()
+
+        else:
+            print("Could Not Fetch Joke")
+
+    except requests.exceptions.RequestException:
+        print("Network/API Error")
+
+    except Exception as e:
+        print("Error:", e)
+
+
+# Main Program Loop
+
+
+while True:
+
+    line()
+    print("CLI MULTI-TOOL ASSISTANT")
+    line()
+
+    print("1. Weather")
+    print("2. GitHub Finder")
+    print("3. Random Quote")
+    print("4. Random Joke")
+    print("Type 'exit' to quit")
+
+    choice = input("\nEnter Choice: ").lower()
+
+    if choice == "1":
+        weather_tool()
+
+    elif choice == "2":
+        github_tool()
+
+    elif choice == "3":
+        quote_tool()
+
+    elif choice == "4":
+        joke_tool()
+
+    elif choice == "exit":
+        print("Program Ended")
+        break
+
+    else:
+        print("Invalid Choice")
