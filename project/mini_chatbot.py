@@ -11,7 +11,7 @@ def prev_message():
                 except KeyError:
                     print("Invalid message format skipped")
 
-            return data   # ✅ ALWAYS return if successful
+            return data   
 
     except FileNotFoundError:
         print("No previous chat found.")
